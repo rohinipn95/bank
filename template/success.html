@@ -1,0 +1,9 @@
+{% if messages %}
+<div class="alert alert-{{ messages|first.level }}">
+    {{ messages|first }}
+   <!-- <button> <a href="{% url 'reduction:home' %}">Return to Home Page</a></button>-->
+
+</div>
+{% endif %}
+
+

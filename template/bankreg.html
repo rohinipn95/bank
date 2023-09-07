@@ -1,0 +1,81 @@
+
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            Member Form
+        </div>
+        <div class="card-body">
+            <form method="post" id="MemberForm" enctype="multipart/form-data"  data-cities-url="{% url 'bank:ajax_load_cities' %}" class="form-horizontal" role="form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Submit" class="btn btn-info">
+                </form>
+             <a href="{% url 'reduction:home' %}"><input type="submit" value="Back to Home" class="btn btn-info"></a>
+
+
+        </div>
+
+      </div>
+</div>
+
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+ </script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#id_country").change(function () {
+        const url = $("#MemberForm").attr("data-cities-url");  // get the url of the `load_cities` view
+        const countryId = $(this).val();  // get the selected country ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /members/ajax/load-cities/ )
+            data: {
+                'country_id': countryId       // GET parameters
+            },
+            success: function (data) {
+                $("#id_city").html(data);
+            }
+        });
+
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("form").submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "{% url 'bank:add' %}",
+                data: $(this).serialize(),
+                success: function (response) {
+                    alert("Form submitted successfully!"); // Display an alert message
+                },
+                error: function (xhr, status, error) {
+                    alert("Form submitted successfully!");
+                }
+            });
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

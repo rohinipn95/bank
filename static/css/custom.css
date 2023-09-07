@@ -1,0 +1,18 @@
+.popup{
+    width:400px;
+    background:#fff;
+    border-radius:6px;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+}
+ul{
+list-style:none;
+background:#22438C;
+
+}
+ul li a{
+display:inline-block;
+position:relative;
+}
